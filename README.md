@@ -1,1 +1,1 @@
-# paragraphs_gridstack
+# Paragraphs Gridstack Beta
