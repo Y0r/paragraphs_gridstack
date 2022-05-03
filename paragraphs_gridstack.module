@@ -1,0 +1,17 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for paragraphs_gridstack module.
+ */
+
+/**
+ * Implements hook_preprocess_paragraph().
+ */
+function paragraphs_gridstack_preprocess_paragraph(&$variables) {
+  /** @var \Drupal\paragraphs\ParagraphInterface $paragraph */
+  $paragraph = $variables['elements']['#paragraph'];
+  if ($paragraph->bundle() === 'gridstack') {
+    $variables['#attached']['library'][] = 'paragraphs_gridstack/paragraphs_gridstack';
+  }
+}
