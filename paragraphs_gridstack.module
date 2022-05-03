@@ -11,6 +11,8 @@
 function paragraphs_gridstack_preprocess_paragraph(&$variables) {
   /** @var \Drupal\paragraphs\ParagraphInterface $paragraph */
   $paragraph = $variables['elements']['#paragraph'];
+
+  // @TODO Attach to the paragraphs with enabled gridstack behavior.
   if ($paragraph->bundle() === 'gridstack') {
     $variables['#attached']['library'][] = 'paragraphs_gridstack/paragraphs_gridstack';
   }
