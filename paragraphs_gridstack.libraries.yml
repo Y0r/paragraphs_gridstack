@@ -1,0 +1,30 @@
+# @TODO Test if works with lib installed by wikimedia/composer-merge-plugin.
+# @TODO Check if the css is good and still needed in this project.
+paragraphs_gridstack:
+  css:
+    theme:
+      # CSS file for a custom improvements.
+      css/paragraphs-gridstack.css: { }
+      # @TODO Should be replaced in another library.
+      # @TODO Need to add second bundle of CSS files for 12 columns.
+      # CSS files for custom count of columns.
+      css/gridstack-56.css: { }
+      css/gridstack-extra-56.css: { }
+  js:
+    # @TODO Refactor this file with options from optionsets.
+    # @TODO Make it readable, improve code quality.
+    js/paragraphs_gridstack.js: { }
+    /libraries/gridstack.js/gridstack-h5.js: { }
+  # @TODO Do we really need this dependencies?
+  dependencies:
+    - core/jquery
+    - core/jquery.once
+    - core/drupal
+    - core/drupalSettings
+
+# @TODO Rewrite and add improvements.
+paragraphs_gridstack.admin_form:
+  css:
+    theme:
+      # CSS file for admin form.
+      css/tau-gridstack-form.css: { }
