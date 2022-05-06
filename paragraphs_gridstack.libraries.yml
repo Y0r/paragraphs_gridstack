@@ -23,8 +23,10 @@ paragraphs_gridstack:
     - core/drupalSettings
 
 # @TODO Rewrite and add improvements.
-paragraphs_gridstack.admin_form:
-  css:
-    theme:
-      # CSS file for admin form.
-      css/tau-gridstack-form.css: { }
+# @TODO Actually this file is useless.
+# @TODO Will be replaced with another library.
+#paragraphs_gridstack.admin_form:
+#  css:
+#    theme:
+#      # CSS file for admin form.
+#      css/tau-gridstack-form.css: { }
