@@ -1,0 +1,19 @@
+{
+  "repositories": {
+    "gridstack/gridstack.js": {
+      "type": "package",
+      "package": {
+        "name": "gridstack/gridstack.js",
+        "version": "1.2.1",
+        "type": "drupal-library",
+        "dist": {
+          "url": "https://github.com/gridstack/gridstack.js/archive/v1.2.1.zip",
+          "type": "zip"
+        }
+      }
+    }
+  },
+  "require": {
+    "gridstack/gridstack.js": "1.2.1"
+  }
+}
