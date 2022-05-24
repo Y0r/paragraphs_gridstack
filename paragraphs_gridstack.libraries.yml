@@ -1,19 +1,15 @@
 # @TODO Test if works with lib installed by wikimedia/composer-merge-plugin.
 # @TODO Check if the css is good and still needed in this project.
-paragraphs_gridstack:
+paragraphs_gridstack.base:
   css:
     theme:
-      # CSS file for a custom improvements.
-      css/paragraphs-gridstack.css: { }
-      # @TODO Should be replaced in another library.
-      # @TODO Need to add second bundle of CSS files for 12 columns.
-      # CSS files for custom count of columns.
-      css/gridstack-56.css: { }
-      css/gridstack-extra-56.css: { }
+      # The CSS file for behaviour form.
+      css/gridstack-base.css: {}
   js:
     # @TODO Refactor this file with options from optionsets.
     # @TODO Make it readable, improve code quality.
     js/paragraphs_gridstack.js: { }
+    # @TODO Check if the file path corrent.
     /libraries/gridstack.js/gridstack-h5.js: { }
   # @TODO Do we really need this dependencies?
   dependencies:
@@ -22,11 +18,30 @@ paragraphs_gridstack:
     - core/drupal
     - core/drupalSettings
 
-# @TODO Rewrite and add improvements.
-# @TODO Actually this file is useless.
-# @TODO Will be replaced with another library.
-#paragraphs_gridstack.admin_form:
-#  css:
-#    theme:
-#      # CSS file for admin form.
-#      css/tau-gridstack-form.css: { }
+# Default 'Small' (14 columns) grid type.
+paragraphs_gridstack.columns.14:
+  css:
+    theme:
+      css/gridstack-columns-14.css: {}
+      css/gridstack-columns-14-extra.css: {}
+
+# Default 'Medium' (28 columns) grid type.
+paragraphs_gridstack.columns.28:
+  css:
+    theme:
+      css/gridstack-columns-28.css: {}
+      css/gridstack-columns-28-extra.css: {}
+
+# Default 'Large' (42 columns) grid type.
+paragraphs_gridstack.columns.42:
+  css:
+    theme:
+      css/gridstack-columns-42.css: {}
+      css/gridstack-columns-42-extra.css: {}
+
+# Default 'Very large' (56 columns) grid type.
+paragraphs_gridstack.columns.56:
+  css:
+    theme:
+      css/gridstack-columns-56.css: {}
+      css/gridstack-columns-56-extra.css: {}
