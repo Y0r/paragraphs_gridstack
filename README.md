@@ -1,3 +1,3 @@
 # Paragraphs Gridstack Beta
 
-Roadmap: Daily meeting, tasks creating/updating, merge requests review. Communication and help with complicated issues.
+Roadmap: https://docs.google.com/document/d/1waUt03_xtA4KMqiIMDvs4kPf4R7OM_NmzAT1haVyBDM/edit?usp=sharing
