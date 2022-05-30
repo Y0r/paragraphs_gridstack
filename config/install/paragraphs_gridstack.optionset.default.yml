@@ -1,0 +1,13 @@
+# The id of the config entity.
+id: default
+
+langcode: en
+name: default
+weight: -10
+label: Default
+options:
+  perBundle: false
+  perEntity: false
+  freeSpace: sticky
+  allowCustomClass: false
+  allowRoundedClass: true
