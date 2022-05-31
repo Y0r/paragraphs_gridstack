@@ -1,41 +1,29 @@
-# Schema for the configuration files of the Config Entity Example module.
-
-# This schema tells the config system how to read our config YML files.
-# See for example the file config/config_entity_example.robot.marvin.yml, which
-# contains our default config entity.
 
 # Documentation for schema files like this one is located here:
 # https://drupal.org/node/1905070
 
 paragraphs_gridstack.optionset.*:
   type: config_entity
-  label: 'Paragraphs Gridstack optionset'
+  label: "Paragraphs Gridstack optionset"
   mapping:
     id:
       type: string
-      label: 'ID'
+      label: "ID"
     uuid:
       type: string
-      label: 'UUID'
+      label: "UUID"
     label:
       type: label
-      label: 'Label'
+      label: "Label"
     langcode:
       type: string
-      label: 'Default language'
-    perBundle:
+      label: "Default language"
+    float:
       type: boolean
-      label: 'Per Bundle'
-    perEntity:
-      type: boolean
-      label: 'Per Entity'
-    freeSpace:
-      type: string
-      label: "Sticky/Float to free space"
+      label: "Go upward to fill free space"
     allowCustomClass:
       type: boolean
-      label: 'Allow custom classes for items'
+      label: "Allow custom classes for items"
     allowRoundedClass:
       type: boolean
-      label: 'Allow making items circle'
-
+      label: "Allow making items circle"

@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\config_entity_example\Form;
+namespace Drupal\paragraphs_gridstack\Form;
 
 use Drupal\Core\Form\FormStateInterface;
 

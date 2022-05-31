@@ -35,7 +35,7 @@ use Drupal\Core\Config\Entity\ConfigEntityBase;
  *   id = "paragraphs_gridstack",
  *   label = @Translation("Paragraphs Gridstack optionset"),
  *   handlers = {
- *     "access" = "Drupal\paragraphs_gridstack\ParagraphsGridstackAccessController",
+ *     "access" = "Drupal\paragraphs_gridstack\ParagraphsGridstackAccessControlHandler",
  *     "list_builder" = "Drupal\paragraphs_gridstack\Controller\ParagraphsGridstackListBuilder",
  *     "form" = {
  *       "add" = "Drupal\paragraphs_gridstack\Form\ParagraphsGridstackAddForm",
@@ -43,22 +43,21 @@ use Drupal\Core\Config\Entity\ConfigEntityBase;
  *       "delete" = "Drupal\paragraphs_gridstack\Form\ParagraphsGridstackDeleteForm"
  *     }
  *   },
+ *   config_prefix = "optionset",
  *   entity_keys = {
  *     "id" = "id",
  *     "label" = "label"
  *   },
  *   links = {
- *     "edit-form" = "/admin/config/media/paragraphs_gridstack/manage/{id}",
- *     "delete-form" = "/admin/config/media/paragraphs_gridstack/manage/{id}/delete"
+ *     "edit-form" = "/admin/config/media/paragraphs_gridstack/manage/{paragraphs_gridstack}",
+ *     "delete-form" = "/admin/config/media/paragraphs_gridstack/manage/{paragraphs_gridstack}/delete"
  *   },
  *   config_export = {
  *     "id",
  *     "uuid",
  *     "label",
  *     "langcode",
- *     "perBundle",
- *     "perEntity",
- *     "freeSpace",
+ *     "float",
  *     "allowCustomClass",
  *     "allowRoundedClass"
  *   }
@@ -88,40 +87,24 @@ class ParagraphsGridstack extends ConfigEntityBase {
   public $label;
 
   /**
-   * Options set per paragraphs bundle.
+   * Widgets will go upward direction to fill container's empty place.
    *
-   * @var boolean
+   * @var bool
    */
-  public $perBundle;
-
-  /**
-   * Options set per paragraph entity.
-   *
-   * @var boolean
-   */
-  public $perEntity;
-
-  /**
-   * Setting for mode (Sticky/Float) to free space.
-   *
-   * @var string
-   */
-  public $freeSpace;
+  public $float;
 
   /**
    * Allow custom classes for elements.
    *
-   * @var boolean
+   * @var bool
    */
   public $allowCustomClass;
 
   /**
    * Allow round class for elements.
    *
-   * @var boolean
+   * @var bool
    */
   public $allowRoundedClass;
-
-
 
 }

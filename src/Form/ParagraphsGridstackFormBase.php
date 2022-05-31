@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\config_entity_example\Form;
+namespace Drupal\paragraphs_gridstack\Form;
 
 use Drupal\Core\Entity\EntityForm;
 use Drupal\Core\Entity\EntityStorageInterface;
@@ -12,9 +12,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * Class ParagraphsGridstackFormBase.
  *
  * Typically, we need to build the same form for both adding a new entity,
- * and editing an existing entity. Instead of duplicating our form code,
- * we create a base class. Drupal never routes to this class directly,
- * but instead through the child classes of ParagraphsGridstackAddForm and ParagraphsGridstackEditForm.
+ * and editing an existing entity.
  */
 class ParagraphsGridstackFormBase extends EntityForm {
 
@@ -103,10 +101,20 @@ class ParagraphsGridstackFormBase extends EntityForm {
       ],
       '#disabled' => !$paragraphsGridstack->isNew(),
     ];
-    $form['floopy'] = [
+    $form['float'] = [
       '#type' => 'checkbox',
-      '#title' => $this->t('Floopy'),
-      '#default_value' => $paragraphsGridstack->floopy,
+      '#title' => $this->t("Float setting: widgets will go upward direction to fill container's empty place"),
+      '#default_value' => $paragraphsGridstack->float,
+    ];
+    $form['allowCustomClass'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Allow custom classes for items'),
+      '#default_value' => $paragraphsGridstack->allowCustomClass,
+    ];
+    $form['allowRoundedClass'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Allow making items circle'),
+      '#default_value' => $paragraphsGridstack->allowRoundedClass,
     ];
 
     // Return the form.
@@ -116,60 +124,14 @@ class ParagraphsGridstackFormBase extends EntityForm {
   /**
    * Checks for an existing ParagraphsGridstack.
    *
-   * @param string|int $entity_id
-   *   The entity ID.
-   * @param array $element
-   *   The form element.
-   * @param \Drupal\Core\Form\FormStateInterface $form_state
-   *   The form state.
-   *
    * @return bool
    *   TRUE if this format already exists, FALSE otherwise.
    */
   public function exists($entity_id, array $element, FormStateInterface $form_state) {
-    // Use the query factory to build a new ParagraphsGridstack entity query.
     $query = $this->entityStorage->getQuery();
-
-    // Query the entity ID to see if its in use.
     $result = $query->condition('id', $element['#field_prefix'] . $entity_id)
       ->execute();
-
-    // We don't need to return the ID, only if it exists or not.
     return (bool) $result;
-  }
-
-  /**
-   * Overrides Drupal\Core\Entity\EntityFormController::actions().
-   *
-   * To set the submit button text, we need to override actions().
-   *
-   * @param array $form
-   *   An associative array containing the structure of the form.
-   * @param \Drupal\Core\Form\FormStateInterface $form_state
-   *   An associative array containing the current state of the form.
-   *
-   * @return array
-   *   An array of supported actions for the current entity form.
-   */
-  protected function actions(array $form, FormStateInterface $form_state) {
-    // Get the basic actins from the base class.
-    $actions = parent::actions($form, $form_state);
-
-    // Change the submit button text.
-    $actions['submit']['#value'] = $this->t('Save');
-
-    // Return the result.
-    return $actions;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function validateForm(array &$form, FormStateInterface $form_state) {
-    parent::validateForm($form, $form_state);
-
-    // Add code here to validate your config entity's form elements.
-    // Nothing to do here.
   }
 
   /**
@@ -203,16 +165,22 @@ class ParagraphsGridstackFormBase extends EntityForm {
     if ($status == SAVED_UPDATED) {
       // If we edited an existing entity...
       $this->messenger()->addMessage($this->t('ParagraphsGridstack %label has been updated.', ['%label' => $paragraphsGridstack->label()]));
-      $this->logger('contact')->notice('ParagraphsGridstack %label has been updated.', ['%label' => $paragraphsGridstack->label(), 'link' => $edit_link]);
+      $this->logger('contact')->notice(
+        'ParagraphsGridstack %label has been updated.',
+        ['%label' => $paragraphsGridstack->label(), 'link' => $edit_link]
+      );
     }
     else {
       // If we created a new entity...
       $this->messenger()->addMessage($this->t('ParagraphsGridstack %label has been added.', ['%label' => $paragraphsGridstack->label()]));
-      $this->logger('contact')->notice('Robot %label has been added.', ['%label' => $paragraphsGridstack->label(), 'link' => $edit_link]);
+      $this->logger('contact')->notice(
+        'Robot %label has been added.',
+        ['%label' => $paragraphsGridstack->label(), 'link' => $edit_link]
+      );
     }
 
     // Redirect the user back to the listing route after the save operation.
-    $form_state->setRedirect('entity.paragraphs_gridstack.optionsets.list');
+    $form_state->setRedirect('entity.paragraphs_gridstack.list');
   }
 
 }

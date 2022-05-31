@@ -11,9 +11,8 @@ use Drupal\Core\Session\AccountInterface;
  * Defines an access controller for the ParagraphsGridstack entity.
  *
  * @see \Drupal\paragraphs_gridstack\Entity\ParagraphsGridstack
- *
  */
-class ParagraphsGridstackAccessController extends EntityAccessControlHandler {
+class ParagraphsGridstackAccessControlHandler extends EntityAccessControlHandler {
 
   /**
    * {@inheritdoc}

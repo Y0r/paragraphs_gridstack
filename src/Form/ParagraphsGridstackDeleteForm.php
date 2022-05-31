@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\config_entity_example\Form;
+namespace Drupal\paragraphs_gridstack\Form;
 
 use Drupal\Core\Entity\EntityConfirmFormBase;
 use Drupal\Core\Url;
@@ -9,11 +9,7 @@ use Drupal\Core\Form\FormStateInterface;
 /**
  * Class ParagraphsGridstackDeleteForm.
  *
- * Provides a confirm form for deleting the entity. This is different from the
- * add and edit forms as it does not inherit from ParagraphsGridstackFormBase. The reason for
- * this is that we do not need to build the same form. Instead, we present the
- * user with a simple yes/no question. For this reason, we derive from
- * EntityConfirmFormBase instead.
+ * Provides a confirm form for deleting the entity.
  */
 class ParagraphsGridstackDeleteForm extends EntityConfirmFormBase {
 
@@ -57,7 +53,7 @@ class ParagraphsGridstackDeleteForm extends EntityConfirmFormBase {
    *   The URL to go to if the user cancels the deletion.
    */
   public function getCancelUrl() {
-    return new Url('entity.paragraphs_gridstack.optionsets.list');
+    return new Url('entity.paragraphs_gridstack.list');
   }
 
   /**

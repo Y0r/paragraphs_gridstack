@@ -22,8 +22,6 @@ use Drupal\examples\Utility\DescriptionTemplateTrait;
  * an entity type ID. When a user navigates to the URL for that router item,
  * Drupal loads the annotation for that entity type. It looks for the "list"
  * entry under "controllers" for the class to load.
- *
- * @ingroup config_entity_example
  */
 class ParagraphsGridstackListBuilder extends ConfigEntityListBuilder {
   use DescriptionTemplateTrait;
@@ -32,7 +30,7 @@ class ParagraphsGridstackListBuilder extends ConfigEntityListBuilder {
    * {@inheritdoc}
    */
   protected function getModuleName() {
-    return 'config_entity_example';
+    return 'paragraphs_gridstack';
   }
 
   /**
@@ -46,9 +44,7 @@ class ParagraphsGridstackListBuilder extends ConfigEntityListBuilder {
   public function buildHeader() {
     $header['label'] = $this->t('Label');
     $header['machine_name'] = $this->t('Machine Name');
-    $header['perBundle'] = $this->t('Per Bundle');
-    $header['perEntity'] = $this->t('Per Entity');
-    $header['freeSpace'] = $this->t('Sticky/Float');
+    $header['float'] = $this->t('Float');
     $header['allowCustomClass'] = $this->t('Allow custom classes for items');
     $header['allowRoundedClass'] = $this->t('Allow making items circle');
 
@@ -67,13 +63,12 @@ class ParagraphsGridstackListBuilder extends ConfigEntityListBuilder {
    * @see \Drupal\Core\Entity\EntityListController::render()
    */
   public function buildRow(EntityInterface $entity) {
+    $boolean = [1 => $this->t('True'), 0 => $this->t('False')];
     $row['label'] = $entity->label();
     $row['machine_name'] = $entity->id();
-    $row['perBundle'] = $entity->perBundle;
-    $row['perEntity'] = $entity->perEntity;
-    $row['freeSpace'] = $entity->freeSpace;
-    $row['allowCustomClass'] = $entity->allowCustomClass;
-    $row['allowRoundedClass'] = $entity->allowRoundedClass;
+    $row['float'] = $boolean[(int) $entity->float];
+    $row['allowCustomClass'] = $boolean[(int) $entity->allowCustomClass];
+    $row['allowRoundedClass'] = $boolean[(int) $entity->allowRoundedClass];
 
     return $row + parent::buildRow($entity);
   }
@@ -91,6 +86,23 @@ class ParagraphsGridstackListBuilder extends ConfigEntityListBuilder {
     $build = $this->description();
     $build[] = parent::render();
     return $build;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getDefaultOperations(EntityInterface $entity) {
+    $operations = parent::getDefaultOperations($entity);
+
+    if (isset($operations['edit'])) {
+      $operations['edit']['title'] = $this->t('Configure');
+    }
+
+    if ($entity->id() == 'default') {
+      unset($operations['delete'], $operations['edit']);
+    }
+
+    return $operations;
   }
 
 }
