@@ -23,14 +23,6 @@ use Drupal\Core\Entity\EntityInterface;
  * entry under "controllers" for the class to load.
  */
 class ParagraphsGridstackListBuilder extends ConfigEntityListBuilder {
-  use DescriptionTemplateTrait;
-
-  /**
-   * {@inheritdoc}
-   */
-  protected function getModuleName() {
-    return 'paragraphs_gridstack';
-  }
 
   /**
    * Builds the header row for the entity listing.
@@ -73,21 +65,6 @@ class ParagraphsGridstackListBuilder extends ConfigEntityListBuilder {
   }
 
   /**
-   * Adds some descriptive text to our entity list.
-   *
-   * Typically, there's no need to override render(). You may wish to do so,
-   * however, if you want to add markup before or after the table.
-   *
-   * @return array
-   *   Renderable array.
-   */
-  public function render() {
-    $build = $this->description();
-    $build[] = parent::render();
-    return $build;
-  }
-
-  /**
    * {@inheritdoc}
    */
   public function getDefaultOperations(EntityInterface $entity) {
@@ -98,7 +75,7 @@ class ParagraphsGridstackListBuilder extends ConfigEntityListBuilder {
     }
 
     if ($entity->id() == 'default') {
-      unset($operations['delete'], $operations['edit']);
+      unset($operations['delete']);
     }
 
     return $operations;

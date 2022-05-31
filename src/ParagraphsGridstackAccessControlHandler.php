@@ -18,13 +18,9 @@ class ParagraphsGridstackAccessControlHandler extends EntityAccessControlHandler
    * {@inheritdoc}
    */
   public function checkAccess(EntityInterface $entity, $operation, AccountInterface $account) {
-    // The $opereration parameter tells you what sort of operation access is
-    // being checked for.
-    if ($operation == 'view') {
+    if ($operation == 'view' || $account->hasPermission('administer paragraphs_gridstack')) {
       return AccessResult::allowed();
     }
-    // Other than the view operation, we're going to be insanely lax about
-    // access. Don't try this at home!
     return parent::checkAccess($entity, $operation, $account);
   }
 

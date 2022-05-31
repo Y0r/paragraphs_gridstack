@@ -9,7 +9,7 @@ use Drupal\Core\Config\ConfigFactoryInterface;
  */
 class ParagraphsGridstackManager implements ParagraphsGridstackManagerInterface {
 
-  const PREFIX = 'paragraphs_gridstack.optionset.';
+  private const PREFIX = 'paragraphs_gridstack.optionset.';
 
   /**
    * The config factory.
@@ -30,13 +30,6 @@ class ParagraphsGridstackManager implements ParagraphsGridstackManagerInterface 
    */
   public function get($name = 'default') {
     return $this->config->get($this::PREFIX . $name);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getEditable($name = 'default') {
-    return $this->config->getEditable($this::PREFIX . $name);
   }
 
   /**
