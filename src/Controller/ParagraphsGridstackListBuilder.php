@@ -4,7 +4,6 @@ namespace Drupal\paragraphs_gridstack\Controller;
 
 use Drupal\Core\Config\Entity\ConfigEntityListBuilder;
 use Drupal\Core\Entity\EntityInterface;
-use Drupal\examples\Utility\DescriptionTemplateTrait;
 
 /**
  * Provides a listing of ParagraphsGridstack entities.
