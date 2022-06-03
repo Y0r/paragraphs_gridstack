@@ -1,5 +1,10 @@
 services:
+  # TODO Add event subscriber for optionset altering.
   paragraphs_gridstack.manager:
     class: Drupal\paragraphs_gridstack\ParagraphsGridstackManager
-    arguments: ["@config.factory"]
-# TODO Add event subscriber for optionset altering.
+    arguments: [ '@config.factory']
+
+  # TODO Add event subscriber for breakpoints altering.
+  paragraphs_gridstack.breakpoints_manager:
+    class: Drupal\paragraphs_gridstack\ParagraphsGridstackManager
+    arguments: [ '@config.factory', '@config.factory' ]
