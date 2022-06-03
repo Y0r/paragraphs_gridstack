@@ -36,8 +36,8 @@ class ParagraphsGridstackListBuilder extends ConfigEntityListBuilder {
     $header['label'] = $this->t('Label');
     $header['machine_name'] = $this->t('Machine Name');
     $header['float'] = $this->t('Float');
-    $header['allowCustomClass'] = $this->t('Allow custom classes for items');
-    $header['allowRoundedClass'] = $this->t('Allow making items circle');
+    $header['allow_custom_class'] = $this->t('Allow custom classes for items');
+    $header['allow_rounded_class'] = $this->t('Allow making items circle');
 
     return $header + parent::buildHeader();
   }
@@ -58,8 +58,8 @@ class ParagraphsGridstackListBuilder extends ConfigEntityListBuilder {
     $row['label'] = $entity->label();
     $row['machine_name'] = $entity->id();
     $row['float'] = $boolean[(int) $entity->float];
-    $row['allowCustomClass'] = $boolean[(int) $entity->allowCustomClass];
-    $row['allowRoundedClass'] = $boolean[(int) $entity->allowRoundedClass];
+    $row['allow_custom_class'] = $boolean[(int) $entity->allow_custom_class];
+    $row['allow_rounded_class'] = $boolean[(int) $entity->allow_rounded_class];
 
     return $row + parent::buildRow($entity);
   }

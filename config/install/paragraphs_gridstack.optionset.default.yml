@@ -4,5 +4,5 @@ langcode: en
 weight: -10
 label: Default
 float: true
-allowCustomClass: false
-allowRoundedClass: true
+allow_custom_class: false
+allow_rounded_class: true

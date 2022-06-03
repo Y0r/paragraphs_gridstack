@@ -58,8 +58,8 @@ use Drupal\Core\Config\Entity\ConfigEntityBase;
  *     "label",
  *     "langcode",
  *     "float",
- *     "allowCustomClass",
- *     "allowRoundedClass"
+ *     "allow_custom_class",
+ *     "allow_rounded_class"
  *   }
  * )
  */
@@ -98,13 +98,13 @@ class ParagraphsGridstack extends ConfigEntityBase {
    *
    * @var bool
    */
-  public $allowCustomClass;
+  public $allow_custom_class;
 
   /**
    * Allow round class for elements.
    *
    * @var bool
    */
-  public $allowRoundedClass;
+  public $allow_rounded_class;
 
 }

@@ -19,14 +19,3 @@ function paragraphs_gridstack_preprocess_paragraph(&$variables) {
     $variables['#attached']['library'][] = 'paragraphs_gridstack/paragraphs_gridstack';
   }
 }
-
-/**
- * Test service 'paragraphs_gridstack.manager'.
- */
-function paragraphs_gridstack_page_attachments_alter(array &$attachments) {
-  /** @var Drupal\paragraphs_gridstack\ParagraphsGridstackManager $gridstack_manager */
-  $gridstack_manager = \Drupal::service('paragraphs_gridstack.manager');
-  $list = $gridstack_manager->listAll();
-  $default = $gridstack_manager->get();
-
-}

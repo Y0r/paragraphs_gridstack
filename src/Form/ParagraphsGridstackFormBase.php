@@ -106,15 +106,15 @@ class ParagraphsGridstackFormBase extends EntityForm {
       '#title' => $this->t("Float setting: widgets will go upward direction to fill container's empty place"),
       '#default_value' => $paragraphsGridstack->float,
     ];
-    $form['allowCustomClass'] = [
+    $form['allow_custom_class'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Allow custom classes for items'),
-      '#default_value' => $paragraphsGridstack->allowCustomClass,
+      '#default_value' => $paragraphsGridstack->allow_custom_class,
     ];
-    $form['allowRoundedClass'] = [
+    $form['allow_rounded_class'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Allow making items circle'),
-      '#default_value' => $paragraphsGridstack->allowRoundedClass,
+      '#default_value' => $paragraphsGridstack->allow_rounded_class,
     ];
 
     // Return the form.

@@ -1,5 +1,3 @@
-# @TODO Add optionset entity add/edit/delete routes.
-
 # The routing.yml file defines the paths for our module.
 # Here we define the paths for our entity type's admin UI.
 
@@ -7,12 +5,8 @@
 entity.paragraphs_gridstack.list:
   path: "/admin/config/media/paragraphs-gridstack"
   defaults:
-    # '_entity_list' tells Drupal to use an entity list controller.
-    # We give the entity ID here. Drupal then looks in the entity's annotation
-    # and looks for the "list" entry under "controllers" for the class to load.
-    # @see \Drupal\Core\Entity\Enhancer\EntityRouteEnhancer
     _entity_list: paragraphs_gridstack
-    _title: "ParagraphsGridstack"
+    _title: "Gridstack Optionsets List"
   requirements:
     _permission: "administer paragraphs_gridstack"
 
@@ -20,39 +14,25 @@ entity.paragraphs_gridstack.list:
 entity.paragraphs_gridstack.add_form:
   path: "/admin/config/media/paragraphs-gridstack/add"
   defaults:
-    _title: "Add ParagraphsGridstack"
-    # Like _entity_list above, _entity_form gives the entity type ID, only this
-    # time also lists the form separated by a period. Drupal looks in the
-    # annotation for the entity and locates the "add" entry under "form" for
-    # the form class to load.
-    # @see \Drupal\Core\Entity\Enhancer\EntityRouteEnhancer
+    _title: "Add Gridstack Optionset"
     _entity_form: paragraphs_gridstack.add
   requirements:
     _permission: "administer paragraphs_gridstack"
 
 # This is the router item for editing our entity.
 entity.paragraphs_gridstack.edit_form:
-  # Parameters may be passed to the form via the URL path. We name the
-  # parameter in the path by enclosing it in curly braces. For entity forms,
-  # we include the entity ID in the path by including a parameter with the
-  # same name as the entity type ID.
   path: "/admin/config/media/paragraphs-gridstack/manage/{paragraphs_gridstack}"
   defaults:
-    _title: "Edit ParagraphsGridstack"
-    # List our add entry above, this _entity_form entry instructs Drupal to
-    # read our entity type's annonation, and look for the "edit" entry under
-    # "form".
+    _title: "Edit Gridstack Optionset"
     _entity_form: paragraphs_gridstack.edit
   requirements:
-    # This uses our entity access controller.
-    # @see \Drupal\Core\Entity\EntityAccessCheck
     _entity_access: paragraphs_gridstack.update
 
 # This is the router item for deleting an instance of our entity.
 entity.paragraphs_gridstack.delete_form:
   path: "/admin/config/media/paragraphs-gridstack/manage/{paragraphs_gridstack}/delete"
   defaults:
-    _title: "Delete ParagraphsGridstack"
+    _title: "Delete Gridstack Optionset"
     _entity_form: paragraphs_gridstack.delete
   requirements:
     _entity_access: paragraphs_gridstack.delete

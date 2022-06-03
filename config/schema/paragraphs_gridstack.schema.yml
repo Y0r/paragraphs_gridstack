@@ -21,9 +21,9 @@ paragraphs_gridstack.optionset.*:
     float:
       type: boolean
       label: "Go upward to fill free space"
-    allowCustomClass:
+    allow_custom_class:
       type: boolean
       label: "Allow custom classes for items"
-    allowRoundedClass:
+    allow_rounded_class:
       type: boolean
       label: "Allow making items circle"

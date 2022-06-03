@@ -72,7 +72,7 @@ class ParagraphsGridstackDeleteForm extends EntityConfirmFormBase {
     $this->entity->delete();
 
     // Set a message that the entity was deleted.
-    $this->messenger()->addMessage($this->t('ParagraphsGridstack optionser %label was deleted.', [
+    $this->messenger()->addMessage($this->t('Gridstack Optionset %label was deleted.', [
       '%label' => $this->entity->label(),
     ]));
 
