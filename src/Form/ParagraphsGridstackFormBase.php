@@ -2,10 +2,11 @@
 
 namespace Drupal\paragraphs_gridstack\Form;
 
-use Drupal\Core\Entity\EntityForm;
-use Drupal\Core\Entity\EntityStorageInterface;
-use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
+use Drupal\Core\Entity\EntityForm;
+use Drupal\Core\Form\FormStateInterface;
+use GridstackBreakpointsManagerInterface;
+use Drupal\Core\Entity\EntityStorageInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -21,7 +22,14 @@ class ParagraphsGridstackFormBase extends EntityForm {
    *
    * @var \Drupal\Core\Entity\EntityStorageInterface
    */
-  protected $entityStorage;
+  protected EntityStorageInterface $entityStorage;
+
+  /**
+   * Gridstack Manager for the breakpoints.
+   *
+   * @var GridstackBreakpointsManagerInterface
+   */
+  protected GridstackBreakpointsManagerInterface $gridstackBreakpointsManager;
 
   /**
    * Construct the ParagraphsGridstackFormBase.
@@ -34,8 +42,9 @@ class ParagraphsGridstackFormBase extends EntityForm {
    * @param \Drupal\Core\Entity\EntityStorageInterface $entity_storage
    *   An entity query factory for the ParagraphsGridstack entity type.
    */
-  public function __construct(EntityStorageInterface $entity_storage) {
+  public function __construct(EntityStorageInterface $entity_storage, GridstackBreakpointsManagerInterface $gridstack_breakpoints_manager) {
     $this->entityStorage = $entity_storage;
+    $this->gridstackBreakpointsManager = $gridstack_breakpoints_manager;
   }
 
   /**
@@ -53,7 +62,10 @@ class ParagraphsGridstackFormBase extends EntityForm {
    * pass the factory to our class as a constructor parameter.
    */
   public static function create(ContainerInterface $container) {
-    $form = new static($container->get('entity_type.manager')->getStorage('paragraphs_gridstack'));
+    $form = new static([
+      $container->get('entity_type.manager')->getStorage('paragraphs_gridstack'),
+      $container->get('paragraphs_gridstack.breakpoints_manager'),
+    ]);
     $form->setMessenger($container->get('messenger'));
     return $form;
   }
@@ -87,13 +99,14 @@ class ParagraphsGridstackFormBase extends EntityForm {
       '#type' => 'textfield',
       '#title' => $this->t('Label'),
       '#maxlength' => 255,
-      '#default_value' => $paragraphsGridstack->label(),
+      '#default_value' => $paragraphsGridstack->label() ?? NULL,
       '#required' => TRUE,
     ];
+
     $form['id'] = [
       '#type' => 'machine_name',
       '#title' => $this->t('Machine name'),
-      '#default_value' => $paragraphsGridstack->id(),
+      '#default_value' => $paragraphsGridstack->id() ?? NULL,
       '#machine_name' => [
         'exists' => [$this, 'exists'],
         'replace_pattern' => '([^a-z0-9_]+)|(^custom$)',
@@ -101,20 +114,40 @@ class ParagraphsGridstackFormBase extends EntityForm {
       ],
       '#disabled' => !$paragraphsGridstack->isNew(),
     ];
+
     $form['float'] = [
       '#type' => 'checkbox',
       '#title' => $this->t("Float setting: widgets will go upward direction to fill container's empty place"),
-      '#default_value' => $paragraphsGridstack->float,
+      '#default_value' => $paragraphsGridstack->float ?? TRUE,
     ];
+
     $form['allow_custom_class'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Allow custom classes for items'),
-      '#default_value' => $paragraphsGridstack->allow_custom_class,
+      '#default_value' => $paragraphsGridstack->allow_custom_class ?? FALSE,
     ];
+
     $form['allow_rounded_class'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Allow making items circle'),
-      '#default_value' => $paragraphsGridstack->allow_rounded_class,
+      '#default_value' => $paragraphsGridstack->allow_rounded_class ?? FALSE,
+    ];
+
+    // Load the list of the breakpoints providers.
+    // Get the default provider and validate available provider.
+    $options = $this->gridstackBreakpointsManager->getBreakpointsProvidersList();
+    $default_provider = $this->gridstackBreakpointsManager->getDefaultBreakpointsProvider();
+    if (!empty($paragraphsGridstack->breakpoints_provider) && !empty($this->gridstackBreakpointsManager->getBreakpointsByProvider($paragraphsGridstack->breakpoints_provider))) {
+      $default_provider = $paragraphsGridstack->breakpoints_provider;
+    }
+
+    $form['breakpoints_provider'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Choose the breakpoints provider:'),
+      '#description' => $this->t('By default will be used a main theme of your site, but if the breakpoints is not specified in theme, they will be taken from Paragraphs Gridstack module. Use this settings to specify another theme/module as breakpoints provider.'),
+      '#options' => $options,
+      '#default_value' => $default_provider,
+      '#required' => TRUE,
     ];
 
     // Return the form.
@@ -145,6 +178,9 @@ class ParagraphsGridstackFormBase extends EntityForm {
    *   An associative array containing the structure of the form.
    * @param \Drupal\Core\Form\FormStateInterface $form_state
    *   An associative array containing the current state of the form.
+   *
+   * @throws \Drupal\Core\Entity\EntityMalformedException
+   * @throws \Drupal\Core\Entity\EntityStorageException
    */
   public function save(array $form, FormStateInterface $form_state) {
     // EntityForm provides us with the entity we're working on.

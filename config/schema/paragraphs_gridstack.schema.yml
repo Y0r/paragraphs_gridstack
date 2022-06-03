@@ -27,3 +27,6 @@ paragraphs_gridstack.optionset.*:
     allow_rounded_class:
       type: boolean
       label: "Allow making items circle"
+    breakpoints_provider:
+      type: string
+      label: "Breakpoints provider"

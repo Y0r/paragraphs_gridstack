@@ -6,3 +6,4 @@ label: Default
 float: true
 allow_custom_class: false
 allow_rounded_class: true
+breakpoints_provider: 'paragraphs_gridstack'

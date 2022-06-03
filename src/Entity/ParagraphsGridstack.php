@@ -3,6 +3,7 @@
 namespace Drupal\paragraphs_gridstack\Entity;
 
 use Drupal\Core\Config\Entity\ConfigEntityBase;
+use Drupal\Core\Entity\Annotation\ConfigEntityType;
 
 /**
  * Defines the config entity.
@@ -59,7 +60,8 @@ use Drupal\Core\Config\Entity\ConfigEntityBase;
  *     "langcode",
  *     "float",
  *     "allow_custom_class",
- *     "allow_rounded_class"
+ *     "allow_rounded_class",
+ *     "breakpoints_provider",
  *   }
  * )
  */
@@ -106,5 +108,12 @@ class ParagraphsGridstack extends ConfigEntityBase {
    * @var bool
    */
   public $allow_rounded_class;
+
+  /**
+   * Selected theme or module, which should be user as source of breakpoints.
+   *
+   * @var string
+   */
+  public $breakpoints_provider;
 
 }
