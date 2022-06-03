@@ -1,0 +1,14 @@
+# Add some local task links to facilitate navigation.
+
+paragraphs_gridstack.add_action:
+  route_name: entity.paragraphs_gridstack.add_form
+  title: "Add Paragraph's Gridstack"
+  appears_on:
+    - entity.paragraphs_gridstack.list
+
+paragraphs_gridstack.list_action:
+  route_name: entity.paragraphs_gridstack.list
+  title: "List Paragraph's Gridstacks"
+  appears_on:
+    - entity.paragraphs_gridstack.add_form
+    - entity.paragraphs_gridstack.edit_form

@@ -1,0 +1,29 @@
+
+# Documentation for schema files like this one is located here:
+# https://drupal.org/node/1905070
+
+paragraphs_gridstack.optionset.*:
+  type: config_entity
+  label: "Paragraphs Gridstack optionset"
+  mapping:
+    id:
+      type: string
+      label: "ID"
+    uuid:
+      type: string
+      label: "UUID"
+    label:
+      type: label
+      label: "Label"
+    langcode:
+      type: string
+      label: "Default language"
+    float:
+      type: boolean
+      label: "Go upward to fill free space"
+    allow_custom_class:
+      type: boolean
+      label: "Allow custom classes for items"
+    allow_rounded_class:
+      type: boolean
+      label: "Allow making items circle"

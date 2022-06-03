@@ -1,0 +1,8 @@
+# The id of the config entity.
+id: default
+langcode: en
+weight: -10
+label: Default
+float: true
+allow_custom_class: false
+allow_rounded_class: true

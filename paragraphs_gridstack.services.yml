@@ -1,1 +1,5 @@
+services:
+  paragraphs_gridstack.manager:
+    class: Drupal\paragraphs_gridstack\ParagraphsGridstackManager
+    arguments: ["@config.factory"]
 # TODO Add event subscriber for optionset altering.

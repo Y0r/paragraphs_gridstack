@@ -19,5 +19,3 @@ function paragraphs_gridstack_preprocess_paragraph(&$variables) {
     $variables['#attached']['library'][] = 'paragraphs_gridstack/paragraphs_gridstack';
   }
 }
-
-
