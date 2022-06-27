@@ -3,7 +3,7 @@ description: 'Provides draggable, resizable, responsive bootstrap-friendly layou
 type: module
 package: Paragraphs
 core_version_requirement: ^8 || ^9 || ^10
-
+version: 1.x
 dependencies:
   - paragraphs:paragraphs
 
