@@ -110,7 +110,7 @@ class ParagraphsGridstack extends ConfigEntityBase {
   public $allow_rounded_class;
 
   /**
-   * Selected theme or module, which should be user as source of breakpoints.
+   * Selected theme or module and their group, which should be user as source of breakpoints.
    *
    * @var string
    */

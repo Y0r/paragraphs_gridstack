@@ -1,5 +1,7 @@
 <?php
 
+namespace Drupal\paragraphs_gridstack;
+
 use Drupal\breakpoint\BreakpointManagerInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
 
@@ -33,29 +35,43 @@ class GridstackBreakpointsManager implements GridstackBreakpointsManagerInterfac
   /**
    * {@inheritdoc}
    */
-  function getBreakpointsProviders(): array {
+  public function getBreakpointsProviders(): array {
     $groups = $this->breakpointManager->getGroups();
 
     $groups_providers = [];
     foreach ($groups as $key => $label) {
-      $provider = $this->breakpointManager->getGroupProviders($key);
-      $groups_providers[$key] = array_flip($provider);
+      $providers = $this->breakpointManager->getGroupProviders($key);
+      foreach ($providers as $provider_name => $provider_type) {
+        // Concat provider and group identifiers if group specified.
+        $machine_name = $provider_name;
+        if ($provider_name !== $key) {
+          $machine_name = "$provider_name.$key";
+        }
+
+        $groups_providers[$machine_name] = [
+          'type' => $provider_type,
+          'provider' => $provider_name,
+          'group' => $key,
+          'label' => $label,
+        ];
+      }
     }
 
+    // Sort by keys.
+    ksort($groups_providers);
     return $groups_providers;
   }
 
   /**
    * {@inheritdoc}
    */
-  function getBreakpointsProvidersList(): array {
+  public function getBreakpointsProvidersList(): array {
     $options = [];
-    $groups_providers = $this->getBreakpointsProviders();
+    $breakpoints_providers = $this->getBreakpointsProviders();
 
-    foreach ($groups_providers as $group => $provider) {
-      $provider_type = key($provider);
-      $provider_name = $provider[$provider_type];
-      $options[t($provider_type)->render()][t($group)->render()] = $provider_name;
+    foreach ($breakpoints_providers as $machine_name => $breakpoints_provider) {
+      $provider_label = ucwords(str_replace(['_', '.'], ' ', $machine_name));
+      $options[t(ucfirst($breakpoints_provider['type']))->render()][t($machine_name)->render()] = $provider_label;
     }
 
     return $options;
@@ -64,23 +80,32 @@ class GridstackBreakpointsManager implements GridstackBreakpointsManagerInterfac
   /**
    * {@inheritdoc}
    */
-  function getBreakpointsByProvider(string $provider): array {
-    $options = [];
-    $groups_providers = $this->getBreakpointsProviders();
+  public function getBreakpointsByCondition(string $provider): array {
+    $breakpoints = [];
+    $breakpoints_providers = $this->getBreakpointsProviders();
+    $breakpoints_provider = $breakpoints_providers[$provider] ?? NULL;
 
-    foreach ($groups_providers as $group => $group_provider) {
-      $provider_type = key($group_provider);
-      $provider_name = $group_provider[$provider_type];
-      $options[$provider_name] = $group;
+    if (empty($breakpoints_provider)) {
+      foreach ($breakpoints_providers as $breakpoints_data) {
+        if ($breakpoints_data['provider'] == $provider) {
+          $breakpoints_provider = $breakpoints_data;
+          break;
+        }
+      }
     }
 
-    return $this->breakpointManager->getBreakpointsByGroup($options[$provider]);
+    if (!empty($breakpoints_provider['group'])) {
+      $breakpoints = $this->breakpointManager
+        ->getBreakpointsByGroup($breakpoints_provider['group']);
+    }
+
+    return $breakpoints;
   }
 
   /**
    * {@inheritdoc}
    */
-  function getBreakpointsMediaQuery(array $breakpoints): array {
+  public function getBreakpointsMediaQuery(array $breakpoints): array {
     if (empty($breakpoints)) {
       return [];
     }
@@ -103,16 +128,8 @@ class GridstackBreakpointsManager implements GridstackBreakpointsManagerInterfac
   /**
    * {@inheritdoc}
    */
-  function getDefaultBreakpointsProvider(): string {
-    $current_theme = $this->configFactory
-      ->get('system.theme')
-      ->get('default');
-
-    $breakpoints = $this->getBreakpointsByProvider($current_theme);
-    if (!empty($this->getBreakpointsMediaQuery($breakpoints))) {
-      return $current_theme;
-    }
-
+  public function getDefaultBreakpointsProvider(): string {
     return 'paragraphs_gridstack';
   }
+
 }

@@ -6,5 +6,5 @@ services:
 
   # TODO Add event subscriber for breakpoints altering.
   paragraphs_gridstack.breakpoints_manager:
-    class: Drupal\paragraphs_gridstack\ParagraphsGridstackManager
-    arguments: [ '@config.factory', '@config.factory' ]
+    class: Drupal\paragraphs_gridstack\GridstackBreakpointsManager
+    arguments: [ '@breakpoint.manager', '@config.factory' ]

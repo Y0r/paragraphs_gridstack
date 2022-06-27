@@ -5,7 +5,7 @@ namespace Drupal\paragraphs_gridstack\Form;
 use Drupal\Core\Link;
 use Drupal\Core\Entity\EntityForm;
 use Drupal\Core\Form\FormStateInterface;
-use GridstackBreakpointsManagerInterface;
+use Drupal\paragraphs_gridstack\GridstackBreakpointsManagerInterface;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -27,7 +27,7 @@ class ParagraphsGridstackFormBase extends EntityForm {
   /**
    * Gridstack Manager for the breakpoints.
    *
-   * @var GridstackBreakpointsManagerInterface
+   * @var \Drupal\paragraphs_gridstack\GridstackBreakpointsManagerInterface
    */
   protected GridstackBreakpointsManagerInterface $gridstackBreakpointsManager;
 
@@ -62,10 +62,10 @@ class ParagraphsGridstackFormBase extends EntityForm {
    * pass the factory to our class as a constructor parameter.
    */
   public static function create(ContainerInterface $container) {
-    $form = new static([
+    $form = new static(
       $container->get('entity_type.manager')->getStorage('paragraphs_gridstack'),
       $container->get('paragraphs_gridstack.breakpoints_manager'),
-    ]);
+    );
     $form->setMessenger($container->get('messenger'));
     return $form;
   }
@@ -137,7 +137,7 @@ class ParagraphsGridstackFormBase extends EntityForm {
     // Get the default provider and validate available provider.
     $options = $this->gridstackBreakpointsManager->getBreakpointsProvidersList();
     $default_provider = $this->gridstackBreakpointsManager->getDefaultBreakpointsProvider();
-    if (!empty($paragraphsGridstack->breakpoints_provider) && !empty($this->gridstackBreakpointsManager->getBreakpointsByProvider($paragraphsGridstack->breakpoints_provider))) {
+    if (!empty($paragraphsGridstack->breakpoints_provider) && !empty($this->gridstackBreakpointsManager->getBreakpointsByCondition($paragraphsGridstack->breakpoints_provider))) {
       $default_provider = $paragraphsGridstack->breakpoints_provider;
     }
 
