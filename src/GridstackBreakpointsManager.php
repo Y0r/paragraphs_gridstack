@@ -45,7 +45,7 @@ class GridstackBreakpointsManager implements GridstackBreakpointsManagerInterfac
         // Concat provider and group identifiers if group specified.
         $machine_name = $provider_name;
         if ($provider_name !== $key) {
-          $machine_name = "$provider_name.$key";
+          $machine_name = strtolower("$provider_name.$key");
         }
 
         $groups_providers[$machine_name] = [
