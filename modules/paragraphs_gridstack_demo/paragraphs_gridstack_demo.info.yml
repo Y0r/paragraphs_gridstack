@@ -1,0 +1,11 @@
+name: 'Paragraphs Gridstack Demo'
+description: 'Provides demo of usage Paragraph Gridstack module.'
+type: module
+package: Paragraphs
+core_version_requirement: ^8 || ^9 || ^10
+version: 1.x
+dependencies:
+  - drupal:media
+  - drupal:media_library
+  - paragraphs:paragraphs
+

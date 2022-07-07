@@ -1,0 +1,28 @@
+uuid: 84188880-4e9c-4cb5-8dd6-7fcdb4229f80
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.gridstack_container.field_gridstack_paragraphs
+    - paragraphs.paragraphs_type.gridstack_container
+  module:
+    - entity_reference_revisions
+id: paragraph.gridstack_container.default
+targetEntityType: paragraph
+bundle: gridstack_container
+mode: default
+content:
+  field_gridstack_paragraphs:
+    type: entity_reference_revisions_entity_view
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  entity_print_view_epub: true
+  entity_print_view_pdf: true
+  entity_print_view_word_docx: true
+  search_api_excerpt: true

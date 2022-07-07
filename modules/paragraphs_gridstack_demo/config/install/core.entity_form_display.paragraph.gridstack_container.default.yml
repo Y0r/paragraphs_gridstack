@@ -1,0 +1,35 @@
+uuid: c1bee6b1-67ce-410b-82eb-0958aabd2536
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.gridstack_container.field_gridstack_paragraphs
+    - paragraphs.paragraphs_type.gridstack_container
+  module:
+    - paragraphs
+id: paragraph.gridstack_container.default
+targetEntityType: paragraph
+bundle: gridstack_container
+mode: default
+content:
+  field_gridstack_paragraphs:
+    type: entity_reference_paragraphs
+    weight: 0
+    region: content
+    settings:
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: open
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: ''
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    weight: 1
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+hidden:
+  created: true

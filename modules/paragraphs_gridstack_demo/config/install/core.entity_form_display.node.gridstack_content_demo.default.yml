@@ -1,0 +1,53 @@
+uuid: 1a1c4509-c6d9-4044-80d8-53bc76ebcf57
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.gridstack_content_demo.field_gridstack_paragraphs
+    - node.type.gridstack_content_demo
+  module:
+    - paragraphs
+id: node.gridstack_content_demo.default
+targetEntityType: node
+bundle: gridstack_content_demo
+mode: default
+content:
+  field_gridstack_paragraphs:
+    type: entity_reference_paragraphs
+    weight: 1
+    region: content
+    settings:
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: open
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: ''
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    weight: 2
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  flag: true
+  langcode: true
+  moderation_state: true
+  path: true
+  promote: true
+  publish_on: true
+  sticky: true
+  uid: true
+  unpublish_on: true
+  url_redirects: true

@@ -1,0 +1,12 @@
+<?php
+/**
+ * @file
+ * Installation hooks for paragraphs_gridstack_examples module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function paragraphs_gridstack_demo_install() {
+  // @TODO Add installation a few nodes with examples of the gridstack paragraphs usage.
+}

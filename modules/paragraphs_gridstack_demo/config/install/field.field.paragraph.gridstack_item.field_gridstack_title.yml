@@ -1,0 +1,19 @@
+uuid: 3ef6c5b0-5fee-4e58-92a6-d241a95703ed
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_gridstack_title
+    - paragraphs.paragraphs_type.gridstack_item
+id: paragraph.gridstack_item.field_gridstack_title
+field_name: field_gridstack_title
+entity_type: paragraph
+bundle: gridstack_item
+label: Title
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

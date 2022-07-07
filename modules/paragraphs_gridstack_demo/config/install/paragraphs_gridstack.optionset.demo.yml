@@ -1,0 +1,10 @@
+uuid: b054b7f7-2219-4e66-88e5-57fc7205213a
+langcode: en
+status: true
+dependencies: {  }
+id: demo
+label: Demo
+float: true
+allow_custom_class: true
+allow_rounded_class: true
+breakpoints_provider: paragraphs_gridstack

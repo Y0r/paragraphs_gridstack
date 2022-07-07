@@ -1,0 +1,211 @@
+uuid: 3ce3a330-bc6f-480b-8b66-c590838c850c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_gridstack_paragraphs
+    - node.type.gridstack_content_demo
+    - paragraphs.paragraphs_type.gridstack_container
+  module:
+    - entity_reference_revisions
+id: node.gridstack_content_demo.field_gridstack_paragraphs
+field_name: field_gridstack_paragraphs
+entity_type: node
+bundle: gridstack_content_demo
+label: Paragraphs
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      gridstack_container: gridstack_container
+    negate: 0
+    target_bundles_drag_drop:
+      accordion:
+        weight: 62
+        enabled: false
+      accordion_item:
+        weight: 63
+        enabled: false
+      audio:
+        weight: 64
+        enabled: false
+      bonus_module_item:
+        weight: 66
+        enabled: false
+      bonus_modules:
+        weight: 65
+        enabled: false
+      carousel:
+        weight: 67
+        enabled: false
+      carousels_list:
+        weight: 68
+        enabled: false
+      choice_reminder:
+        weight: 69
+        enabled: false
+      course_introduction:
+        weight: 70
+        enabled: false
+      cpe_credits:
+        weight: 71
+        enabled: false
+      customers_logos:
+        weight: 72
+        enabled: false
+      drupal_block:
+        weight: 73
+        enabled: false
+      drupal_view:
+        weight: 74
+        enabled: false
+      editorial_board:
+        weight: 75
+        enabled: false
+      editorial_board_item:
+        weight: 76
+        enabled: false
+      entity_cards:
+        weight: 77
+        enabled: false
+      fact_section:
+        weight: 78
+        enabled: false
+      feedback_cards:
+        weight: 79
+        enabled: false
+      feedback_item:
+        weight: 80
+        enabled: false
+      flexible:
+        weight: 81
+        enabled: false
+      grid:
+        weight: 82
+        enabled: false
+      gridstack_container:
+        weight: 83
+        enabled: true
+      gridstack_item:
+        weight: 84
+        enabled: false
+      help_card:
+        weight: 85
+        enabled: false
+      layout:
+        weight: 86
+        enabled: false
+      list_of_bootcamps:
+        weight: 87
+        enabled: false
+      list_with_attachments:
+        weight: 88
+        enabled: false
+      list_with_cards:
+        weight: 89
+        enabled: false
+      list_with_courses:
+        weight: 90
+        enabled: false
+      megamenu_link_item:
+        weight: 91
+        enabled: false
+      message_from_seo:
+        weight: 92
+        enabled: false
+      module:
+        weight: 93
+        enabled: false
+      multichoice:
+        weight: 94
+        enabled: false
+      page_cover:
+        weight: 95
+        enabled: false
+      paragraph_wista_video:
+        weight: 96
+        enabled: false
+      paragraph_with_youtube:
+        weight: 97
+        enabled: false
+      quiz_question_term_pool:
+        weight: 98
+        enabled: false
+      quiz_result_feedback:
+        weight: 99
+        enabled: false
+      resources_block:
+        weight: 100
+        enabled: false
+      services_block:
+        weight: 101
+        enabled: false
+      settings:
+        weight: 102
+        enabled: false
+      student_group_courses:
+        weight: 103
+        enabled: false
+      table_of_contents:
+        weight: 104
+        enabled: false
+      tabs:
+        weight: 105
+        enabled: false
+      tabs_item:
+        weight: 106
+        enabled: false
+      team_list:
+        weight: 107
+        enabled: false
+      team_member:
+        weight: 108
+        enabled: false
+      text_with_cta:
+        weight: 109
+        enabled: false
+      text_with_title:
+        weight: 110
+        enabled: false
+      two_columns:
+        weight: 111
+        enabled: false
+      unlimited_access:
+        weight: 112
+        enabled: false
+      vertical_tabs_with_entity_cards:
+        weight: 113
+        enabled: false
+      webform:
+        weight: 114
+        enabled: false
+      wide_low_jumbotron:
+        weight: 115
+        enabled: false
+      wso_paragraph_image:
+        weight: 117
+        enabled: false
+      wso_paragraph_pdf:
+        weight: 118
+        enabled: false
+      wso_paragraph_rich_text:
+        weight: 119
+        enabled: false
+      wso_paragraph_sibe_by_side:
+        weight: 120
+        enabled: false
+      wso_paragraph_table:
+        weight: 121
+        enabled: false
+      wso_paragraph_title:
+        weight: 122
+        enabled: false
+      wso_paragraphs_in_block:
+        weight: 116
+        enabled: false
+field_type: entity_reference_revisions

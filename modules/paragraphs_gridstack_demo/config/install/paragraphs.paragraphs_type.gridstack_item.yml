@@ -1,0 +1,15 @@
+uuid: bf50b4ab-5e27-4a51-961d-fd143f36773c
+langcode: en
+status: true
+dependencies:
+  module:
+    - paragraphs_ee
+third_party_settings:
+  paragraphs_ee:
+    paragraphs_categories: {  }
+id: gridstack_item
+label: 'Gridstack Item'
+icon_uuid: null
+icon_default: null
+description: 'A single item with some text and images. Used in Gridstack Container as a child element.'
+behavior_plugins: {  }

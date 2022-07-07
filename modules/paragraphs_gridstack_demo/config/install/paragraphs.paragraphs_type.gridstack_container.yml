@@ -1,0 +1,18 @@
+uuid: 17d55ba8-8d94-42a7-843b-bc236be4ad97
+langcode: en
+status: true
+dependencies:
+  module:
+    - paragraphs_ee
+    - paragraphs_gridstack
+third_party_settings:
+  paragraphs_ee:
+    paragraphs_categories: {  }
+id: gridstack_container
+label: 'Gridstack Container'
+icon_uuid: null
+icon_default: null
+description: ''
+behavior_plugins:
+  gridstack_container:
+    enabled: true

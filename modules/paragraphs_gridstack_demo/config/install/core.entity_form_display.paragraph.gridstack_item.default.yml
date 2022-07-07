@@ -1,0 +1,49 @@
+uuid: 548b59bd-75af-4c21-bc60-c7da2197dbf9
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.gridstack_item.field_gridstack_image
+    - field.field.paragraph.gridstack_item.field_gridstack_subtitle
+    - field.field.paragraph.gridstack_item.field_gridstack_title
+    - paragraphs.paragraphs_type.gridstack_item
+id: paragraph.gridstack_item.default
+targetEntityType: paragraph
+bundle: gridstack_item
+mode: default
+content:
+  field_gridstack_image:
+    type: entity_reference_autocomplete
+    weight: 2
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_gridstack_subtitle:
+    type: string_textfield
+    weight: 1
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_gridstack_title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    weight: 3
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+hidden:
+  created: true

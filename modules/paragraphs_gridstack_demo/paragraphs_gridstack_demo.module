@@ -1,0 +1,15 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for paragraphs_gridstack_demo module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function paragraphs_gridstack_demo_help($route_name, RouteMatchInterface $route_match) {
+  // @TODO Add the help information about demo module.
+}

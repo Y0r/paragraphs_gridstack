@@ -1,0 +1,11 @@
+uuid: 01f4ee45-a0c3-472c-bb08-85d21591a8f4
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.gridstack_content_demo
+id: node.gridstack_content_demo
+target_entity_type_id: node
+target_bundle: gridstack_content_demo
+default_langcode: site_default
+language_alterable: false

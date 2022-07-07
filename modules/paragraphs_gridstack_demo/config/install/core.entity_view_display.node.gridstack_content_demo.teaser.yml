@@ -1,0 +1,28 @@
+uuid: 47f64e9c-c321-4dc7-9e8a-420e2eeb3314
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.gridstack_content_demo.field_gridstack_paragraphs
+    - node.type.gridstack_content_demo
+  module:
+    - user
+id: node.gridstack_content_demo.teaser
+targetEntityType: node
+bundle: gridstack_content_demo
+mode: teaser
+content:
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  entity_print_view_epub: true
+  entity_print_view_pdf: true
+  entity_print_view_word_docx: true
+  field_gridstack_paragraphs: true
+  langcode: true
+  private_message_link: true
+  search_api_excerpt: true

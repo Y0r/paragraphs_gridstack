@@ -1,0 +1,20 @@
+uuid: 56aeb1ad-5156-42c1-85d8-5f45ec8b9ecf
+langcode: en
+status: true
+dependencies:
+  module:
+    - media
+    - paragraphs
+id: paragraph.field_gridstack_image
+field_name: field_gridstack_image
+entity_type: paragraph
+type: entity_reference
+settings:
+  target_type: media
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false
