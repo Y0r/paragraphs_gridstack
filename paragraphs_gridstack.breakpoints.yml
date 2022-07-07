@@ -1,0 +1,18 @@
+paragraphs_gridstack.mobile:
+  label: 'Mobile'
+  mediaQuery: 'all and (max-width: 560px)'
+  weight: 0
+  multipliers:
+    - 1x
+paragraphs_gridstack.tablet:
+  label: 'Tablet'
+  mediaQuery: 'all and (min-width: 561px) and (max-width: 850px)'
+  weight: 1
+  multipliers:
+    - 1x
+paragraphs_gridstack.desktop:
+  label: 'Desktop'
+  mediaQuery: 'all and (min-width: 851px)'
+  weight: 2
+  multipliers:
+    - 1x
