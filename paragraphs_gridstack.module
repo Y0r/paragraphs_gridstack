@@ -5,6 +5,15 @@
  * Primary module hooks for paragraphs_gridstack module.
  */
 
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function paragraphs_gridstack_help($route_name, RouteMatchInterface $route_match) {
+  // @TODO Add the help information about paragraphs gridstack module.
+}
+
 /**
  * Implements hook_preprocess_paragraph().
  */
