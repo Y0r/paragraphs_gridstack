@@ -2,13 +2,18 @@
 
 namespace Drupal\paragraphs_gridstack\Plugin\paragraphs\Behavior;
 
+use Drupal\Core\Link;
 use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\paragraphs\ParagraphInterface;
-use Drupal\paragraphs\Entity\ParagraphsType;
 use Drupal\paragraphs\ParagraphsBehaviorBase;
+use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Entity\EntityFieldManagerInterface;
 use Drupal\paragraphs\Annotation\ParagraphsBehavior;
+use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\paragraphs_gridstack\ParagraphsGridstackManagerInterface;
 
 /**
  * Gridstack container behavior implementation.
@@ -20,7 +25,44 @@ use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
  *   weight = 0,
  * )
  */
-class GridstackContainer extends ParagraphsBehaviorBase {
+class GridstackContainer extends ParagraphsBehaviorBase implements ContainerFactoryPluginInterface {
+
+  /**
+   * The config factory.
+   *
+   * @var \Drupal\Core\Config\ConfigFactoryInterface
+   */
+  protected ConfigFactoryInterface $configFactory;
+
+  /**
+   * Drupal\paragraphs_gridstack\ParagraphsGridstackManagerInterface definition.
+   *
+   * @var \Drupal\paragraphs_gridstack\ParagraphsGridstackManagerInterface
+   */
+  protected ParagraphsGridstackManagerInterface $gridstackOptionsetsManager;
+
+  /**
+   * GridstackContainer plugin constructor.
+   */
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityFieldManagerInterface $entity_field_manager, ConfigFactoryInterface $container_factory, ParagraphsGridstackManagerInterface $gridstack_optionsets_manager) {
+    parent::__construct($configuration, $plugin_id, $plugin_definition, $entity_field_manager);
+    $this->configFactory = $container_factory;
+    $this->gridstackOptionsetsManager = $gridstack_optionsets_manager;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    return new static(
+      $configuration,
+      $plugin_id,
+      $plugin_definition,
+      $container->get('entity_field.manager'),
+      $container->get('config.factory'),
+      $container->get('paragraphs_gridstack.manager'),
+    );
+  }
 
   /**
    * {@inheritdoc}
@@ -34,8 +76,50 @@ class GridstackContainer extends ParagraphsBehaviorBase {
    */
   public function buildBehaviorForm(ParagraphInterface $paragraph, array &$form, FormStateInterface $form_state) {
     // @TODO Fetch from Gridstack optionset.
-    $config = \Drupal::config('tau_gridstack.settings')->get('config');
+    // $config = \Drupal::config('tau_gridstack.settings')->get('config');
 
+    $options = $this->buildOptions();
+    $description = $this->t('You can manage Gridstack Optionsets here.');
+    $management_page_route = 'entity.paragraphs_gridstack.list';
+
+    $form['optionset'] = [
+      '#type' => 'select',
+      '#options' => $options,
+      '#default_value' => $paragraph->getBehaviorSetting($this->getPluginId(), 'optionset', 'paragraphs_gridstack.optionset.default'),
+      '#title' => $this->t('Choose the Gridstack Optionset:'),
+      '#description' => Link::createFromRoute($description, $management_page_route)->toRenderable(),
+    ];
+
+    $form['buttons'] = ['#type' => 'container'];
+    $form['buttons']['set_by_template'] = [
+      '#type' => 'button',
+      '#title' => $this->t('Set by template'),
+      '#attributes' => [
+        'id' => 'pg-action-set-by-template',
+        'class' => ['paragraphs-gridstack-action'],
+        'title' => $this->t('Press to set elements like in template. You can manage template settings in the Gridstack Optionset.'),
+      ],
+    ];
+
+    $form['buttons']['restore'] = [
+      '#type' => 'button',
+      '#title' => $this->t('Restore settings'),
+      '#attributes' => [
+        'id' => 'pg-action-restore',
+        'class' => ['paragraphs-gridstack-action'],
+        'title' => $this->t('Press to restore settings of the latest revision.'),
+      ],
+    ];
+
+    //grid_columns
+    //grid_json_template
+    //grid_json_default
+    //grid_json
+
+    //grid_columns_mobile
+    //grid_json_mobile_template
+    //grid_json_mobile_default
+    //grid_json_mobile
 
     $form['grid_columns'] = [
       '#type' => 'select',
@@ -75,44 +159,6 @@ class GridstackContainer extends ParagraphsBehaviorBase {
       '#default_value' => $paragraph->getBehaviorSetting($this->getPluginId(), 'grid_json', ''),
     ];
 
-    $form['grid_columns_mobile'] = [
-      '#type' => 'select',
-      '#options' => [
-        // @TODO Fetch from optionset.
-        '7' => $this->t('Small Grid'),
-        '12' => $this->t('Advanced Grid'),
-      ],
-      '#attributes' => [
-        'class' => ['grid_columns_mobile', '--hide'],
-      ],
-      '#default_value' => $paragraph->getBehaviorSetting($this->getPluginId(), 'grid_columns_mobile', '12'),
-    ];
-
-    $form['grid_json_mobile_template'] = [
-      '#type' => 'textarea',
-      '#attributes' => [
-        'class' => ['grid_json_mobile_template'],
-      ],
-      // @TODO Fetch from optionset.
-      '#default_value' => $config['template_mobile'] ?? '',
-    ];
-
-    $form['grid_json_mobile_default'] = [
-      '#type' => 'textarea',
-      '#attributes' => [
-        'class' => ['grid_json_mobile_default'],
-      ],
-      '#default_value' => $paragraph->getBehaviorSetting($this->getPluginId(), 'grid_json_mobile_default', ''),
-    ];
-
-    $form['grid_json_mobile'] = [
-      '#type' => 'textarea',
-      '#attributes' => [
-        'class' => ['grid_json_mobile'],
-      ],
-      '#default_value' => $paragraph->getBehaviorSetting($this->getPluginId(), 'grid_json_mobile', ''),
-    ];
-
     // @TODO Why attachment to the first field?
     $form['grid_json']['#attached']['library'][] = 'tau_gridstack/paragraphs_gridstack';
     return $form;
@@ -123,24 +169,42 @@ class GridstackContainer extends ParagraphsBehaviorBase {
    */
   public function settingsSummary(Paragraph $paragraph) {
     // @TODO Looks like fucking bullshit, need to rewrite.
-    $grid_columns = $paragraph->getBehaviorSetting($this->getPluginId(), 'grid_columns');
-    $grid_json_template = $paragraph->getBehaviorSetting($this->getPluginId(), 'template_desktop');
-    $grid_json_default = $paragraph->getBehaviorSetting($this->getPluginId(), 'grid_json_default');
-    $grid_json = $paragraph->getBehaviorSetting($this->getPluginId(), 'grid_json');
-    $grid_columns_mobile = $paragraph->getBehaviorSetting($this->getPluginId(), 'grid_columns_mobile');
-    $grid_json_mobile_template = $paragraph->getBehaviorSetting($this->getPluginId(), 'template_mobile');
-    $grid_json_mobile_default = $paragraph->getBehaviorSetting($this->getPluginId(), 'grid_json_mobile_default');
-    $grid_json_mobile = $paragraph->getBehaviorSetting($this->getPluginId(), 'grid_json_mobile');
+//    $grid_columns = $paragraph->getBehaviorSetting($this->getPluginId(), 'grid_columns');
+//    $grid_json_template = $paragraph->getBehaviorSetting($this->getPluginId(), 'template_desktop');
+//    $grid_json_default = $paragraph->getBehaviorSetting($this->getPluginId(), 'grid_json_default');
+//    $grid_json = $paragraph->getBehaviorSetting($this->getPluginId(), 'grid_json');
+//    $grid_columns_mobile = $paragraph->getBehaviorSetting($this->getPluginId(), 'grid_columns_mobile');
+//    $grid_json_mobile_template = $paragraph->getBehaviorSetting($this->getPluginId(), 'template_mobile');
+//    $grid_json_mobile_default = $paragraph->getBehaviorSetting($this->getPluginId(), 'grid_json_mobile_default');
+//    $grid_json_mobile = $paragraph->getBehaviorSetting($this->getPluginId(), 'grid_json_mobile');
     return [
-      $grid_columns ? $this->t('Columns: @element', ['@element' => $grid_columns]) : '56',
-      $grid_json_template ? $this->t('GridStack JSON: @element', ['@element' => $grid_json_template]) : '',
-      $grid_json_default ? $this->t('GridStack JSON: @element', ['@element' => $grid_json_default]) : '',
-      $grid_json ? $this->t('GridStack JSON: @element', ['@element' => $grid_json]) : '',
-      $grid_columns_mobile ? $this->t('Columns: @element', ['@element' => $grid_columns_mobile]) : '12',
-      $grid_json_mobile_template ? $this->t('GridStack JSON: @element', ['@element' => $grid_json_mobile_template]) : '',
-      $grid_json_mobile_default ? $this->t('GridStack JSON: @element', ['@element' => $grid_json_mobile_default]) : '',
-      $grid_json_mobile ? $this->t('GridStack JSON: @element', ['@element' => $grid_json_mobile]) : '',
+//      $grid_columns ? $this->t('Columns: @element', ['@element' => $grid_columns]) : '56',
+//      $grid_json_template ? $this->t('GridStack JSON: @element', ['@element' => $grid_json_template]) : '',
+//      $grid_json_default ? $this->t('GridStack JSON: @element', ['@element' => $grid_json_default]) : '',
+//      $grid_json ? $this->t('GridStack JSON: @element', ['@element' => $grid_json]) : '',
+//      $grid_columns_mobile ? $this->t('Columns: @element', ['@element' => $grid_columns_mobile]) : '12',
+//      $grid_json_mobile_template ? $this->t('GridStack JSON: @element', ['@element' => $grid_json_mobile_template]) : '',
+//      $grid_json_mobile_default ? $this->t('GridStack JSON: @element', ['@element' => $grid_json_mobile_default]) : '',
+//      $grid_json_mobile ? $this->t('GridStack JSON: @element', ['@element' => $grid_json_mobile]) : '',
     ];
+  }
+
+  /**
+   * Return array of gridstack options sets.
+   *
+   * @return array
+   *   Array of options.
+   */
+  public function buildOptions() {
+    $options = [];
+    $optionsets = $this->gridstackOptionsetsManager->listAll();
+
+    foreach ($optionsets as $optionset) {
+      $config = $this->configFactory->get($optionset);
+      $options[$optionset] = $config->get('label');
+    }
+
+    return $options;
   }
 
 }
