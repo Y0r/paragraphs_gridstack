@@ -68,7 +68,8 @@ class GridstackContainer extends ParagraphsBehaviorBase implements ContainerFact
    * {@inheritdoc}
    */
   public function view(array &$build, Paragraph $paragraph, EntityViewDisplayInterface $display, $view_mode) {
-    // @TODO Move a library attachment in this methods.
+    $build['#attached']['library'][] = 'paragraphs_gridstack/paragraphs_gridstack';
+    // @TODO Pass gridstack data into the paragraph attributes.
   }
 
   /**
