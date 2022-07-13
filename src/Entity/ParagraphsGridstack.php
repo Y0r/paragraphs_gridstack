@@ -62,6 +62,7 @@ use Drupal\Core\Entity\Annotation\ConfigEntityType;
  *     "allow_custom_class",
  *     "allow_rounded_class",
  *     "breakpoints_provider",
+ *     "template",
  *   }
  * )
  */
