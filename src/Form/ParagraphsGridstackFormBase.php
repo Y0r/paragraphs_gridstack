@@ -209,6 +209,7 @@ class ParagraphsGridstackFormBase extends EntityForm {
     else {
       // If we created a new entity...
       $this->messenger()->addMessage($this->t('ParagraphsGridstack %label has been added.', ['%label' => $paragraphsGridstack->label()]));
+      // @TODO robot label should be replaced.
       $this->logger('contact')->notice(
         'Robot %label has been added.',
         ['%label' => $paragraphsGridstack->label(), 'link' => $edit_link]
