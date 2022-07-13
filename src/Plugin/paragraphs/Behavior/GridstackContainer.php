@@ -8,12 +8,14 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\paragraphs\ParagraphInterface;
 use Drupal\paragraphs\ParagraphsBehaviorBase;
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Asset\LibraryDiscoveryInterface;
 use Drupal\Core\Entity\EntityFieldManagerInterface;
 use Drupal\paragraphs\Annotation\ParagraphsBehavior;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\paragraphs_gridstack\ParagraphsGridstackManagerInterface;
+use Drupal\paragraphs_gridstack\GridstackBreakpointsManagerInterface;
 
 /**
  * Gridstack container behavior implementation.
@@ -35,19 +37,35 @@ class GridstackContainer extends ParagraphsBehaviorBase implements ContainerFact
   protected ConfigFactoryInterface $configFactory;
 
   /**
-   * Drupal\paragraphs_gridstack\ParagraphsGridstackManagerInterface definition.
+   * ParagraphsGridstackManagerInterface definition.
    *
    * @var \Drupal\paragraphs_gridstack\ParagraphsGridstackManagerInterface
    */
   protected ParagraphsGridstackManagerInterface $gridstackOptionsetsManager;
 
   /**
+   * GridstackBreakpointsManagerInterface definition.
+   *
+   * @var \Drupal\paragraphs_gridstack\GridstackBreakpointsManagerInterface
+   */
+  protected GridstackBreakpointsManagerInterface $gridstackBreakpointsManager;
+
+  /**
+   * LibraryDiscoveryInterface definition.
+   *
+   * @var \Drupal\Core\Asset\LibraryDiscoveryInterface
+   */
+  protected LibraryDiscoveryInterface $libraryDiscovery;
+
+  /**
    * GridstackContainer plugin constructor.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityFieldManagerInterface $entity_field_manager, ConfigFactoryInterface $container_factory, ParagraphsGridstackManagerInterface $gridstack_optionsets_manager) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityFieldManagerInterface $entity_field_manager, ConfigFactoryInterface $container_factory, ParagraphsGridstackManagerInterface $gridstack_optionsets_manager, GridstackBreakpointsManagerInterface $gridstack_breakpoints_manager, LibraryDiscoveryInterface $library_discovery) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $entity_field_manager);
     $this->configFactory = $container_factory;
     $this->gridstackOptionsetsManager = $gridstack_optionsets_manager;
+    $this->gridstackBreakpointsManager = $gridstack_breakpoints_manager;
+    $this->libraryDiscovery = $library_discovery;
   }
 
   /**
@@ -61,6 +79,8 @@ class GridstackContainer extends ParagraphsBehaviorBase implements ContainerFact
       $container->get('entity_field.manager'),
       $container->get('config.factory'),
       $container->get('paragraphs_gridstack.manager'),
+      $container->get('paragraphs_gridstack.breakpoints_manager'),
+      $container->get('library.discovery'),
     );
   }
 
