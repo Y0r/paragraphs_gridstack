@@ -29,6 +29,10 @@ class ParagraphsGridstackManager implements ParagraphsGridstackManagerInterface 
    * {@inheritdoc}
    */
   public function get($name = 'default') {
+    if (strpos($name, $this::PREFIX) !== FALSE) {
+      return $this->config->get($name);
+    }
+
     return $this->config->get($this::PREFIX . $name);
   }
 
