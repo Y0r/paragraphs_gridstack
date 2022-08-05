@@ -11,10 +11,9 @@ paragraphs_gridstack.base:
     js/paragraphs_gridstack.js: { }
     # @TODO Check if the file path corrent.
     /libraries/gridstack.js/gridstack-h5.js: { }
-  # @TODO Do we really need this dependencies?
   dependencies:
     - core/jquery
-    - core/jquery.once
+    - core/once
     - core/drupal
     - core/drupalSettings
 
