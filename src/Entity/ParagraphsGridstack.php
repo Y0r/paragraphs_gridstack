@@ -62,6 +62,7 @@ use Drupal\Core\Entity\Annotation\ConfigEntityType;
  *     "allow_custom_class",
  *     "allow_rounded_class",
  *     "breakpoints_provider",
+ *     "template",
  *   }
  * )
  */
@@ -110,10 +111,17 @@ class ParagraphsGridstack extends ConfigEntityBase {
   public $allow_rounded_class;
 
   /**
-   * Selected theme or module and their group, which should be user as source of breakpoints.
+   * Theme/module and their group, should be used as source of breakpoints.
    *
    * @var string
    */
   public $breakpoints_provider;
+
+  /**
+   * Optionset template, positions and size of the elements.
+   *
+   * @var string
+   */
+  public $template;
 
 }

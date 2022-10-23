@@ -11,15 +11,15 @@ paragraphs_gridstack.base:
     js/paragraphs_gridstack.js: { }
     # @TODO Check if the file path corrent.
     /libraries/gridstack.js/gridstack-h5.js: { }
-  # @TODO Do we really need this dependencies?
   dependencies:
     - core/jquery
-    - core/jquery.once
+    - core/once
     - core/drupal
     - core/drupalSettings
 
 # Default 'Small' (14 columns) grid type.
 paragraphs_gridstack.columns.14:
+  label: 'Small (14 columns)'
   css:
     theme:
       css/gridstack-columns-14.css: {}
@@ -27,6 +27,7 @@ paragraphs_gridstack.columns.14:
 
 # Default 'Medium' (28 columns) grid type.
 paragraphs_gridstack.columns.28:
+  label: 'Medium (28 columns)'
   css:
     theme:
       css/gridstack-columns-28.css: {}
@@ -34,13 +35,15 @@ paragraphs_gridstack.columns.28:
 
 # Default 'Large' (42 columns) grid type.
 paragraphs_gridstack.columns.42:
+  label: 'Large (42 columns)'
   css:
     theme:
       css/gridstack-columns-42.css: {}
       css/gridstack-columns-42-extra.css: {}
 
-# Default 'Very large' (56 columns) grid type.
+# Default 'Extra large' (56 columns) grid type.
 paragraphs_gridstack.columns.56:
+  label: 'Extra Large (56 columns)'
   css:
     theme:
       css/gridstack-columns-56.css: {}
