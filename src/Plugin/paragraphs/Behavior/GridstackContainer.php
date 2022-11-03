@@ -2,6 +2,8 @@
 
 namespace Drupal\paragraphs_gridstack\Plugin\paragraphs\Behavior;
 
+use Drupal\Component\Utility\Html;
+use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Link;
 use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\Core\Form\FormStateInterface;
@@ -88,7 +90,7 @@ class GridstackContainer extends ParagraphsBehaviorBase implements ContainerFact
    * {@inheritdoc}
    */
   public function view(array &$build, Paragraph $paragraph, EntityViewDisplayInterface $display, $view_mode) {
-    $build['#attached']['library'][] = 'paragraphs_gridstack/paragraphs_gridstack';
+    //$build['#attached']['library'][] = 'paragraphs_gridstack/paragraphs_gridstack';
     // @TODO Pass gridstack data into the paragraph attributes.
   }
 
@@ -96,20 +98,45 @@ class GridstackContainer extends ParagraphsBehaviorBase implements ContainerFact
    * {@inheritdoc}
    */
   public function buildBehaviorForm(ParagraphInterface $paragraph, array &$form, FormStateInterface $form_state) {
+    $form_wrapper_id = Html::getUniqueId('paragraphs-gridstack-wrapper');
+
+    $form['container'] = [
+      '#attributes' => [
+        'class' => ['paragraphs-gridstack-wrapper'],
+      ],
+      '#attached' => [
+        'library' => ['paragraphs_gridstack/paragraphs_gridstack.base'],
+      ],
+      '#prefix' => '<div id="' . $form_wrapper_id . '">',
+      '#suffix' => '</div>',
+    ];
+
     $optionsets = $this->buildOptionsetsOptions();
     $description = $this->t('You can manage Gridstack Optionsets here.');
     $management_page_route = 'entity.paragraphs_gridstack.list';
 
-    $form['optionset'] = [
+    $selected_optionset = $paragraph->getBehaviorSetting(
+      $this->getPluginId(),
+      'optionset',
+      'paragraphs_gridstack.optionset.default'
+    );
+
+    $form['container']['optionset'] = [
       '#type' => 'select',
       '#options' => $optionsets,
-      '#default_value' => $paragraph->getBehaviorSetting($this->getPluginId(), 'optionset', 'paragraphs_gridstack.optionset.default'),
+      '#default_value' => $selected_optionset,
       '#title' => $this->t('Choose the Gridstack Optionset:'),
       '#description' => Link::createFromRoute($description, $management_page_route)->toRenderable(),
+      '#ajax' => [
+        'event' => 'change',
+        'wrapper' => $form_wrapper_id,
+        'progress' => ['type' => 'fullscreen'],
+        'callback' => [$this, 'ajaxRebuildProcess'],
+      ],
     ];
 
-    $form['buttons'] = ['#type' => 'container'];
-    $form['buttons']['set_by_template'] = [
+    $form['container']['buttons'] = ['#type' => 'container'];
+    $form['container']['buttons']['set_by_template'] = [
       '#type' => 'button',
       '#title' => $this->t('Set by template'),
       '#attributes' => [
@@ -119,7 +146,7 @@ class GridstackContainer extends ParagraphsBehaviorBase implements ContainerFact
       ],
     ];
 
-    $form['buttons']['restore'] = [
+    $form['container']['buttons']['restore'] = [
       '#type' => 'button',
       '#title' => $this->t('Restore settings'),
       '#attributes' => [
@@ -129,8 +156,11 @@ class GridstackContainer extends ParagraphsBehaviorBase implements ContainerFact
       ],
     ];
 
-    // @TODO Handle AJAX updating.
-    $selected_optionset = 'default';
+    // Get selected optionset from form state.
+    if ($optionset = $form_state->getValue('optionset')) {
+      $selected_optionset = $optionset;
+    }
+
     /** @var \Drupal\paragraphs_gridstack\Entity\ParagraphsGridstack $optionset_entity */
     $optionset_entity = $this->gridstackOptionsetsManager->get($selected_optionset);
     $breakpoints_provider = $optionset_entity->get('breakpoints_provider');
@@ -173,22 +203,38 @@ class GridstackContainer extends ParagraphsBehaviorBase implements ContainerFact
             $settings['default']
           );
 
-        $form['settings'][$breakpoint->getPluginId()][$machine_name] = [
+        $form['container']['settings'][$breakpoint->getPluginId()][$machine_name] = [
           '#type' => $settings['type'],
           '#default_value' => $default_value,
           '#attributes' => ['class' => [$machine_name]],
         ];
 
         if (!empty($settings['options'])) {
-          $form['settings'][$breakpoint->getPluginId()][$machine_name]['#options'] = $settings['options'];
+          $form['container']['settings'][$breakpoint->getPluginId()][$machine_name]['#options'] = $settings['options'];
         }
       }
     }
 
-    // @TODO Check if this works.
-    $form['#attached']['library'][] = 'paragraphs_gridstack/paragraphs_gridstack.base';
-
     return $form;
+  }
+
+  /**
+   * Ajax callback to rebuild behaviour form.
+   *
+   * @param array $form
+   *   Render array of behaviour form.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   Form state object of the behaviour form.
+   *
+   * @return array
+   *   Render array of the behaviour form.
+   */
+  public function ajaxRebuildProcess(array &$form, FormStateInterface $form_state): array {
+    // Rebuild FormState and return form.
+    $form_state->setRebuild();
+    // @todo Fix problem with broken form here.
+    //return $form['field_gridstack_paragraphs']['widget'][0]['behavior_plugins']['gridstack_container']['container'];
+    return $form['field_gridstack_paragraphs']['widget'][0];
   }
 
   /**
